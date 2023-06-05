@@ -2,66 +2,40 @@ import { Box, Button, Grid, GridItem, Image, Text } from '@chakra-ui/react';
 import React from 'react'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { useLocation } from 'react-router-dom';
 
-const MyWishlist = () => {
+const MyWishlist = ({cartCount,wishlist}) => {
+  const {state} = useLocation();
+console.log(state,"myWishlist====>")
+
+const handleCartButton = () => {
+
+}
   return (
     <>
     <Box>
-    <Header />
-    <Box>
+    <Header wishlist={wishlist} cartCount={cartCount} />
+    <Box mt={25}>
   <Text as="b" fontSize={"25px"}>My WishList</Text>
-  <Box w={"95%"} mx={"auto"} mt={5} mb={5}>
+  <Box w={"95%"} mx={"auto"} mt={5} mb={5} >
               <Grid templateColumns="repeat(3, 2fr)" gap={6}>
                 <GridItem w="100%" h="50vh" bg="gray.300">
-                  <Box>
+                  <Box >
+                    <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
                     <Image
                       boxsize="200px"
                       h="35vh"
-                      src="https://images.pexels.com/photos/5319520/pexels-photo-5319520.jpeg?auto=compress&cs=tinysrgb&w=600"
+                      src={state?.productDetails[0]?.image}
                     />
-                    <Box display="flex" flexDirection={"column"}>
-                      <Text>Men Premium Jacket</Text>
-                      <Text color="black" as="b">
-                        Rs. 2000
-                      </Text>
-                      <Button borderRadius={"none"} bg="blue" mt={2}>
-                        <Text color="white">Move To Cart</Text>
-                      </Button>
                     </Box>
-                  </Box>
-                </GridItem>
-                <GridItem w="100%" h="50vh" bg="gray.300">
-                  <Box>
-                    <Image
-                      boxsize="200px"
-                      h="35vh"
-                      src="https://images.pexels.com/photos/5319520/pexels-photo-5319520.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    />
+                    
                     <Box display="flex" flexDirection={"column"}>
-                      <Text>Men Premium Jacket</Text>
+                      <Text>{state?.productDetails[0]?.title}</Text>
                       <Text color="black" as="b">
-                        Rs. 2000
+                     Rs. {state?.productDetails[0]?.price}
                       </Text>
                       <Button borderRadius={"none"} bg="blue" mt={2}>
-                        <Text color="white">Move To Cart</Text>
-                      </Button>
-                    </Box>
-                  </Box>
-                </GridItem>
-                <GridItem w="100%" h="50vh" bg="gray.300">
-                  <Box>
-                    <Image
-                      boxsize="200px"
-                      h="35vh"
-                      src="https://images.pexels.com/photos/5319520/pexels-photo-5319520.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    />
-                    <Box display="flex" flexDirection={"column"}>
-                      <Text>Men Premium Jacket</Text>
-                      <Text color="black" as="b">
-                        Rs. 2000
-                      </Text>
-                      <Button borderRadius={"none"} bg="blue" mt={2}>
-                        <Text color="white">Move To Cart</Text>
+                        <Text color="white" onClick={() => handleCartButton()}>Move To Cart</Text>
                       </Button>
                     </Box>
                   </Box>
@@ -73,7 +47,6 @@ const MyWishlist = () => {
 
 </Box>
     </Box>
-    <Footer />
     </Box>
     </>
   )

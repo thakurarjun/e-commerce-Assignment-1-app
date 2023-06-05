@@ -1,13 +1,48 @@
 import { Box, Button, Image, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const ProductCard = () => {
+const ProductCard = ({setCartCount,setWishlist}) => {
+  const [count,setCount] = useState(1)
+  const {state} = useLocation();
+console.log(state,"==>myState")
+  const [pro,setPro] = useState([])
+  const navigate = useNavigate();
+  
+  const increament = (val) =>{
+    if(pro[0].stock > val){
+      setCount((pre)=>pre +1 )
+    }
+  }
+  const decreament = (val) =>{
+    if(pro[0].stock > 1 && val > 1 ){
+      setCount((pre)=>pre - 1 )
+    }
+  }
+
+useEffect(()=>{
+if(state){
+  setPro(state.productDetails)
+}
+},[state])
+
+const handleCart = () =>{
+  setCartCount(pre=>pre+1);
+  navigate("/cart")
+}
+
+const handleWishlist = () => {
+  setWishlist(pre=>pre+1)
+  navigate("/wishlist",{state})
+}
+
+
   return (
     <>
       <Box>
-        <Header />
+        <Header  />
         <Box>
           <Box
             justifyContent={"center"}
@@ -26,7 +61,7 @@ const ProductCard = () => {
                 boxsize="150px"
                 borderRadius={"8px"}
                 h="40vh"
-                src="https://images.pexels.com/photos/5319520/pexels-photo-5319520.jpeg?auto=compress&cs=tinysrgb&w=600"
+                src={pro[0]?.image}
               />
             
               <Box
@@ -36,7 +71,8 @@ const ProductCard = () => {
                 mt={2}
               >
                 <Text>
-                  Quantity: <Button>-</Button> 5 <Button>+</Button>
+                  Quantity: <Button onClick={()=>decreament(count)}>-</Button> 
+                  {count}<Button onClick={()=>increament(count)}>+</Button>
                 </Text>
               </Box>
             </Box>
@@ -49,11 +85,11 @@ const ProductCard = () => {
               w="40%"
               height={"43vh"}
             >
-              <Text fontSize={"18px"}>Men Premium Jacket</Text>
+              <Text fontSize={"18px"}>{pro[0]?.title}</Text>
               <Box display="flex" gap={2} flexDirection={"column"}>
                 <Box display="flex" gap={2} justifyContent={"center"} alignItems={"center"} mt={4}>
                 <Text as="b" fontSize={"25px"}>
-                  Rs. 2000
+                  Rs. {pro[0]?.price}
                 </Text>
                 <Text as="s" fontSize={"25px"} color="gray">
                   {" "}
@@ -63,11 +99,11 @@ const ProductCard = () => {
                 <Text color="gray">50% off</Text>
               </Box>
               <Box mt={10} display={"flex"} flexDirection={"column"}>
-                <Button bg="blue">
-                  <Text color="white">SAVE FOR LATER</Text>
+                <Button bg="blue"onClick={() => handleCart()}>
+                  <Text color="white" >ADD TO CART</Text>
                 </Button>
-                <Button mt={2} bg="blue">
-                  <Text color="white">REMOVE</Text>
+                <Button mt={2} bg="blue" onClick={() => handleWishlist()}>
+                  <Text color="white">ADD TO WISHLIST</Text>
                 </Button>
               </Box>
             </Box>

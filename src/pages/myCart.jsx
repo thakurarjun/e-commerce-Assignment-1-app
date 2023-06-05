@@ -1,13 +1,18 @@
 import { Box, Button, Image, Text } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { useLocation } from 'react-router-dom'
 
-const MyCart = () => {
+const MyCart = ({cartCount}) => {
+
+  const {state} = useLocation();
+console.log(state,"state====>")
+
   return (
    <>
    <Box>
-    <Header />
+    <Header cartCount={cartCount} />
     <Box>
     <Box>
        
@@ -30,7 +35,7 @@ const MyCart = () => {
                 boxsize="150px"
                 borderRadius={"8px"}
                 h="40vh"
-                src="https://images.pexels.com/photos/5319520/pexels-photo-5319520.jpeg?auto=compress&cs=tinysrgb&w=600"
+                src={state?.productDetails[0]?.image}
               />
             
               <Box
@@ -54,11 +59,11 @@ const MyCart = () => {
               height={"43vh"}
               ml={8}
             >
-              <Text fontSize={"18px"}>Men Premium Jacket</Text>
+              <Text fontSize={"18px"}>{state?.productDetails[0]?.title}</Text>
               <Box display="flex" gap={2} flexDirection={"column"}>
-                <Box display="flex" gap={2} justifyContent={"center"} alignItems={"center"} mt={8}>
+                <Box display="flex" gap={2} justifyContent={"center"} alignItems={"center"} mt={5}>
                 <Text as="b" fontSize={"25px"}>
-                  Rs. 2000
+                 {state?.productDetails[0]?.price}
                 </Text>
                 <Text as="s" fontSize={"25px"} color="gray">
                   {" "}
@@ -66,10 +71,11 @@ const MyCart = () => {
                 </Text>
                 </Box>
                 <Text color="gray">50% off</Text>
+                <Text color="gray">Rating : {state?.productDetails[0]?.stock}</Text>
               </Box>
-              <Box mt={10} display={"flex"} flexDirection={"column"}>
+              <Box mt={5} display={"flex"} flexDirection={"column"}>
                 <Button bg="blue">
-                  <Text color="white">SAVE FOR LATER</Text>
+                  <Text color="white">SAVE TO WISHLIST</Text>
                 </Button>
                 <Button mt={2} bg="blue">
                   <Text color="white">REMOVE</Text>
@@ -91,7 +97,7 @@ const MyCart = () => {
                     </Box>
                     <Box mt={5} display={"flex"} justifyContent={"space-between"}>
                       <Box>Price(1 item)</Box>
-                      <Box>Rs. 2000</Box>
+                      <Box>{state?.productDetails[0]?.price}</Box>
                     </Box>
                     <Box mt={2} display={"flex"} justifyContent={"space-between"}>
                       <Box>Discount</Box>
