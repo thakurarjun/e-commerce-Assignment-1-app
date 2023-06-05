@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -13,8 +13,68 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Header from "../components/Header";
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+import { users } from "../backend/db/users";
+import { v4 as uuid } from "uuid";
+// import { formatDate } from "../utils/authUtils.js";
+
+
+const schema = yup.object({
+  firstName: yup.string().required(),
+ lastName:yup.string().required(),
+ email:yup.string().email().required(),
+ password:yup.string().required(),
+
+
+
+}).required();
 
 const Signup = () => {
+  const { register, handleSubmit, formState:{ errors } } = useForm({
+    resolver: yupResolver(schema)
+  });
+  const [userData,setUserData] = useState([])
+  useEffect(()=>{
+    setUserData(users)
+  },[users])
+  // console.log(users,"====== users")
+const handleSignup = (data) => {
+  if(userData.length > 0){
+    userData.forEach((item)=>{
+      if(item.email === data.email || item.firstName === data.firstName || item.lastName === data.lastName){
+        return  alert("user already exist")
+      
+      }
+    });
+    // return 
+  }
+    const myData = {
+      _id: uuid(),
+       firstName:data.firstName,
+       lastName:data.lastName,
+       email:data.email,
+       password:data.password,
+       createdAt: Date.now(),
+      updatedAt: Date.now(),
+    };
+    // setUserData([...userData,myData])
+  localStorage.setItem("userData",JSON.stringify([...userData,myData]))
+
+  // }
+  
+
+  
+  console.log(userData,"===== user data ")
+  
+}
+// useEffect(()=>{
+
+// },[userData])
+console.log(userData,"====================== geting data")
+
+
   return (
     <>
       <Box bg={"gray.100"}>
@@ -31,14 +91,35 @@ const Signup = () => {
                     <FormControl w={80} mx="auto" mt={4}>
                       <FormLabel>
                         {" "}
+                        <Text as="b">First Name</Text>
+                      </FormLabel>
+                      <Input
+                        type="text"
+                        placeholder=" First Name"
+                        shadow={"lg"}
+                        {...register("firstName")}
+                      />
+                      <FormLabel mt={3}>
+                        {" "}
+                        <Text as="b">Last Name</Text>
+                      </FormLabel>
+                      <Input
+                        type="text"
+                        placeholder="Last Name"
+                        shadow={"lg"}
+                        {...register("lastName")}
+                      />
+                      <FormLabel mt={3}>
+                        {" "}
                         <Text as="b">Email address</Text>
                       </FormLabel>
                       <Input
                         type="email"
                         placeholder="arjun@neog.camp"
                         shadow={"lg"}
+                        {...register("email")}
                       />
-                      <FormLabel mt={5}>
+                      <FormLabel mt={3}>
                         <Text as="b">Password</Text>
                       </FormLabel>
                       <Input
@@ -46,6 +127,7 @@ const Signup = () => {
                         w={80}
                         placeholder="enter password"
                         shadow="lg"
+                        {...register("password")}
                       />
                     </FormControl>
 
@@ -65,7 +147,10 @@ const Signup = () => {
                       
                     </Box>
 
-                    <Box mt={5} mb={3}>
+                    <Box mt={5} mb={3} 
+                        onClick={handleSubmit(handleSignup)}
+                    
+                    >
                       <Button
                         colorScheme="blackAlpha"
                         w={80}
@@ -79,6 +164,7 @@ const Signup = () => {
                       <Button
                         w={80}
                         shadow="lg"
+                        onClick={()=>navigate("/login")}
                       >
                         <Text color="black">Already have an account?</Text>
                       </Button>

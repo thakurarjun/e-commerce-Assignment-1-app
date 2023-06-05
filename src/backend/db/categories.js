@@ -8,20 +8,26 @@ import { v4 as uuid } from "uuid";
 export const categories = [
   {
     _id: uuid(),
-    categoryName: "fiction",
+    categoryName: "Men_Collection",
     description:
-      "literature in the form of prose, especially novels, that describes imaginary events and people",
+      "Check out our best men collection",
+      image:"https://images.pexels.com/photos/5319580/pexels-photo-5319580.jpeg?auto=compress&cs=tinysrgb&w=600",
+      discount:"30-60% OFF"
   },
   {
     _id: uuid(),
-    categoryName: "non-fiction",
+    categoryName: "Women_Collection",
     description:
-      "Non-fiction is writing that gives information or describes real events, rather than telling a story.",
+      "Check out our best women collection",
+      image:"https://images.pexels.com/photos/4734810/pexels-photo-4734810.jpeg?auto=compress&cs=tinysrgb&w=600",
+      discount:"30-60% OFF"
   },
   {
     _id: uuid(),
-    categoryName: "horror",
+    categoryName: "Kids_Collection",
     description:
-      "Meant to cause discomfort and fear for both the character and readers, horror writers often make use of supernatural and paranormal elements in morbid stories that are sometimes a little too realistic.",
+      "Check out our best kids collection",
+      image:"https://images.pexels.com/photos/8224757/pexels-photo-8224757.jpeg?auto=compress&cs=tinysrgb&w=600",
+      discount:"30-60% OFF"
   },
 ];

@@ -5,6 +5,7 @@ import App from "./App";
 import { makeServer } from "./server";
 import { ChakraProvider } from '@chakra-ui/react';
 import {BrowserRouter} from "react-router-dom"
+import { CartProvider } from "./context/cartContext";
 
 // Call make Server
 makeServer();
@@ -13,7 +14,9 @@ ReactDOM.render(
   <React.StrictMode>
      <ChakraProvider>
       <BrowserRouter>
+      <CartProvider>
       <App />
+      </CartProvider>
       </BrowserRouter>
      </ChakraProvider>
    

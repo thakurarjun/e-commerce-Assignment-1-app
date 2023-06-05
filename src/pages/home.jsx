@@ -1,13 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { Box, Button, Image, Stack, Text } from "@chakra-ui/react";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
+import Spiner from "../components/Spinner";
 
 const Home = () => {
+  const [search,setSearch] = useState("faizane")
+
+  const [categoryData, setCategoryData] = useState([]);
+  const [isLoading,setIsLoading] = useState(false)
+  const navigate = useNavigate();
+  console.log("search vlue arjun",search)
+  useEffect(() => {
+    const fetchCategoryData = async () => {
+      setIsLoading(true)
+      const res = await fetch("/api/categories");
+      const newData = await res.json();
+      console.log(newData, "===>data");
+      setCategoryData(newData);
+      setIsLoading(false)
+    };
+    fetchCategoryData();
+   
+  }, []);
+
+  const handleCategoryData = (cat) => {
+    navigate(`/products/${cat}`)
+  }
   return (
     <>
-      <Box h="auto">
-        <Header />
+    {isLoading ? <Spiner /> :  <Box h="auto">
+        <Header  abc={search} ABC={setSearch} />
         <Box mt={3}>
           <Box pos={"relative"}>
             <Image
@@ -25,6 +49,7 @@ const Home = () => {
                 shadow={"lg"}
                 bg={"transparent"}
                 border="2px solid white"
+                onClick={() =>navigate("/login")}
               >
                 <Text color="white">SHOP NOW</Text>
               </Button>
@@ -38,65 +63,56 @@ const Home = () => {
           </Box>
 
           <Box mt={5}>
-            <Stack
-              direction="row"
-              justifyContent={"space-between"}
-              gap={8}
-              w="90%"
-              mx="auto"
-            >
-              <Box>
-                <Box border="1px solid white" padding={5} shadow="xl" bg="gray.200" borderRadius="15px">
-                  <Image
-                    boxSize="300px"
-                    objectFit="cover"
-                    src="https://images.pexels.com/photos/5319580/pexels-photo-5319580.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Dan Abramov"
-                  />
-                  <Box mt={3} alignContent={"center"}>
-                    <Text as="b" fontSize={"25px"}>
-                      Men Collection
-                    </Text>
-                    <Text>Check out our best men collection</Text>
-                    <Text as="i" color="blue" fontSize={"30px"}>30-60% OFF</Text>
+            {categoryData?.categories?.map((value) => (
+              <Stack
+                key={value._id}
+                // gap={8}
+                w="95%"
+                mx="auto"
+              >
+                <Box onClick={()=>handleCategoryData(value.categoryName)}>
+                  <Box
+                    border="1px solid white"
+                    padding={5}
+                    shadow="xl"
+                    bg="gray.200"
+                    borderRadius="15px"
+                    cursor={"pointer"}
+                  >
+                    <Box
+                      justifyContent={"center"}
+                      alignItems={"center"}
+                      w="25%"
+                      mx="auto"
+                    >
+                      <Image
+                        boxSize="300px"
+                        objectFit="cover"
+                        src={value?.image}
+                        alt="Dan Abramov"
+                      />
+                    </Box>
+
+                    <Box mt={3} alignContent={"center"}>
+                      <Text as="b" fontSize={"25px"}>
+                        {value?.categoryName}
+                      </Text>
+                      <Text>{value?.description}</Text>
+                      <Text as="i" color="blue" fontSize={"30px"}>
+                        30-60% OFF
+                      </Text>
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-
-              <Box  border="1px solid white" padding={5} shadow="xl" bg="gray.200"borderRadius="15px">
-                <Image
-                  boxSize="300px"
-                  objectFit="cover"
-                  src="https://images.pexels.com/photos/4734810/pexels-photo-4734810.jpeg?auto=compress&cs=tinysrgb&w=600"
-                  alt="Dan Abramov"
-                />
-                <Box mt={3}>
-                  <Text as="b" fontSize={"25px"}>WOMEN </Text>
-                  <Text>Check out our best women collection</Text>
-                    <Text as="i" color="blue" fontSize={"30px"}>30-60% OFF</Text>
-                </Box>
-              </Box>
-
-              <Box border="1px solid white" padding={5} shadow="xl" bg="gray.200" borderRadius="15px">
-                <Image
-                  boxSize="300px"
-                  src="https://images.pexels.com/photos/8224757/pexels-photo-8224757.jpeg?auto=compress&cs=tinysrgb&w=600"
-                  alt="Dan Abramov"
-                />
-                <Box mt={3}>
-                  <Text as="b" fontSize={"25px"}>KIDS </Text>
-                  <Text>Check out our best kids collection</Text>
-                    <Text as="i" color="blue" fontSize={"30px"}>30-60% OFF</Text>
-                </Box>
-              </Box>
-            </Stack>
+              </Stack>
+            ))}
           </Box>
         </Box>
         <Box mt={10} justifyContent={"center"} alignItems={"center"}>
-        <Footer />
+          <Footer />
         </Box>
-       
-      </Box>
+      </Box>}
+     
     </>
   );
 };
