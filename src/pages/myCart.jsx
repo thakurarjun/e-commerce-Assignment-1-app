@@ -4,9 +4,10 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useLocation } from "react-router-dom";
 
-const MyCart = ({ cartCount, setWishlist, wishlist,cartItem,setCartItem }) => {
-  const addToWishList = () => {
-    setWishlist((pre) => pre + 1);
+const MyCart = ({ cartCount, setWishList, wishList,cartItem,setCartItem }) => {
+  const addToWishList = (index) => {
+    const updateItem = cartItem.filter((_,i)=> i === index )
+    setWishList([...wishList,updateItem[0]]);
   };
   const { state } = useLocation();
   // console.log(state.productDetails, "state====>");
@@ -25,7 +26,7 @@ const MyCart = ({ cartCount, setWishlist, wishlist,cartItem,setCartItem }) => {
   return (
     <>
       <Box>
-        <Header cartCount={cartCount} cartItem={cartItem} wishlist={wishlist} />
+        <Header cartCount={cartCount} cartItem={cartItem} wishList={wishList} />
         <Box>
           {cartItem  ? 
           <Box >
@@ -86,7 +87,7 @@ const MyCart = ({ cartCount, setWishlist, wishlist,cartItem,setCartItem }) => {
                 </Box>
                 <Box mt={5} display={"flex"} flexDirection={"column"}>
                   <Button bg="blue">
-                    <Text color="white" onClick={() => addToWishList()}>
+                    <Text color="white" onClick={() => addToWishList(i)}>
                       SAVE TO WISHLIST
                     </Text>
                   </Button>
