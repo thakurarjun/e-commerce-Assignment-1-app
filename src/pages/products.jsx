@@ -28,8 +28,9 @@ import {
   allData,
 } from "../backend/db/products";
 import Spiner from "../components/Spinner";
+import { toast } from "react-hot-toast";
 
-const Products = ({search,setSearch,setCartCount}) => {
+const Products = ({search,setSearch,setCartCount,cartItem ,setCartItem}) => {
   const [isLoading,setIsLoading] = useState(false)
   const [value, setValue] = useState(0);
 
@@ -119,12 +120,14 @@ const Products = ({search,setSearch,setCartCount}) => {
   const handleCart = (data) => {
    const addItemToCart = sortedData.filter((_,i) => i === data)
    setCartCount((pre)=>pre+1)
+   setCartItem([...cartItem,addItemToCart[0]])
    navigate("/cart",{state:{productDetails: addItemToCart}})
+   toast.success("Item added to the cart")
   }
   return (
     <>
     {isLoading ? <Spiner /> :  <Box>
-        <Header search = {search} setSearch={setSearch}/>
+        <Header search = {search} setSearch={setSearch} cartItem={cartItem}/>
         <Box display="flex">
           <Box w="22%" pt={2}>
             <Box

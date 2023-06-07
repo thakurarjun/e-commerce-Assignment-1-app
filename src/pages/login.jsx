@@ -13,8 +13,16 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate("/")
+    toast.success("You have loggedin successfully")
+  }
   return (
     <>
       <Box bg={"gray.100"}>
@@ -70,18 +78,19 @@ const Login = () => {
                     </Box>
 
                     <Box mt={5} mb={3}>
-                      <Button colorScheme="blackAlpha" w={80} bg="blue" shadow="lg">
+                      <Button colorScheme="blackAlpha" w={80} bg="blue"
+                      shadow="lg" onClick={() =>handleLogin()}>
                         <Text color="white">Login</Text>
                       </Button>
                     </Box>
-                    <Box mt={5} mb={3}>
+                    {/* <Box mt={5} mb={3}>
                       <Button
                         w={80}
                         shadow="lg"
                       >
                         <Text color="black">Already have an account?</Text>
                       </Button>
-                    </Box>
+                    </Box> */}
                   </Box>
                 </Box>
               </Center>

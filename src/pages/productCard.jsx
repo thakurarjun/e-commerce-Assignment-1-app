@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
-const ProductCard = ({setCartCount,setWishlist}) => {
+const ProductCard = ({setCartCount,setWishlist,wishList,setCartItem,cartItem}) => {
   const [count,setCount] = useState(1)
   const {state} = useLocation();
 console.log(state,"==>myState")
@@ -30,19 +31,22 @@ if(state){
 
 const handleCart = () =>{
   setCartCount(pre=>pre+1);
+  setCartItem([...cartItem,pro[0]])
   navigate("/cart")
+  toast.success("Item added to the cart")
 }
 
 const handleWishlist = () => {
-  setWishlist(pre=>pre+1)
-  navigate("/wishlist",{state})
+  setWishlist([...wishList,pro[0]])
+  // navigate("/wishlist")
+  toast.success("Item added to wishlist")
 }
 
 
   return (
     <>
       <Box>
-        <Header  />
+        <Header cartItem={cartItem} />
         <Box>
           <Box
             justifyContent={"center"}
