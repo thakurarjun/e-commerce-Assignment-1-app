@@ -30,7 +30,7 @@ import {
 import Spiner from "../components/Spinner";
 import { toast } from "react-hot-toast";
 
-const Products = ({search,setSearch,setCartCount,cartItem ,setCartItem}) => {
+const Products = ({search,setSearch,setCartCount,cartItem ,setCartItem,wishList}) => {
   const [isLoading,setIsLoading] = useState(false)
   const [value, setValue] = useState(0);
 
@@ -127,7 +127,7 @@ const Products = ({search,setSearch,setCartCount,cartItem ,setCartItem}) => {
   return (
     <>
     {isLoading ? <Spiner /> :  <Box>
-        <Header search = {search} setSearch={setSearch} cartItem={cartItem}/>
+        <Header search = {search} setSearch={setSearch} cartItem={cartItem} wishList={wishList}/>
         <Box display="flex">
           <Box w="22%" pt={2}>
             <Box

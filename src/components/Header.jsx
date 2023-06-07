@@ -17,7 +17,7 @@ import { BiLogOut } from "react-icons/bi";
 import { toast } from "react-hot-toast";
 
 
-const Header = ({search,setSearch,cartCount=0,wishlist=0,cartItem,wishList}) => {
+const Header = ({search,setSearch,cartCount=0,wishList,cartItem}) => {
   const style = {
     position:"absolute",
     top:"10px",
@@ -28,7 +28,7 @@ const Header = ({search,setSearch,cartCount=0,wishlist=0,cartItem,wishList}) => 
     top: "7px",
     right: "142px"
   }
-  // console.log(search,setSearch,"======================")
+  console.log(wishList,"======================")
   const navigate = useNavigate();
 
   console.log(cartItem.length,"cartdata faiza")
@@ -79,11 +79,11 @@ const Header = ({search,setSearch,cartCount=0,wishlist=0,cartItem,wishList}) => 
             </Box>
             
             <Box ml={5} mt={1} cursor={"pointer"} onClick={()=>navigate("/wishlist")}>
-            <Badge style={style1} colorScheme='purple'>{wishlist}</Badge>
+            <Badge style={style1} colorScheme='purple'>{wishList?wishList?.length : 0}</Badge>
             <Icon as={BsHeart} w={5} h={5} />
             </Box>
             <Box ml={5} mt={1} cursor="pointer" onClick={()=>navigate("/cart")}>
-            <Badge style={style} colorScheme='purple'>{cartItem.length}</Badge>
+            <Badge style={style} colorScheme='purple'>{cartItem?cartItem?.length : 0}</Badge>
             <Icon as={BsCartCheck} w={6} h={5} />
             </Box>
           </Box>
