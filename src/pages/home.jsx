@@ -4,8 +4,9 @@ import { Box, Button, Image, Stack, Text } from "@chakra-ui/react";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import Spiner from "../components/Spinner";
+import { toast } from "react-hot-toast";
 
-const Home = () => {
+const Home = ({cartItem,wishList}) => {
   const [search,setSearch] = useState("faizane")
 
   const [categoryData, setCategoryData] = useState([]);
@@ -28,10 +29,14 @@ const Home = () => {
   const handleCategoryData = (cat) => {
     navigate(`/products/${cat}`)
   }
+  const handleShowBtn = () => {
+    navigate("/login")
+    toast.success("Please login with your account")
+  }
   return (
     <>
     {isLoading ? <Spiner /> :  <Box h="auto">
-        <Header  abc={search} ABC={setSearch} />
+        <Header  abc={search} ABC={setSearch} cartItem={cartItem} wishList={wishList}/>
         <Box mt={3}>
           <Box pos={"relative"}>
             <Image
@@ -49,7 +54,7 @@ const Home = () => {
                 shadow={"lg"}
                 bg={"transparent"}
                 border="2px solid white"
-                onClick={() =>navigate("/login")}
+                onClick={() =>handleShowBtn()}
               >
                 <Text color="white">SHOP NOW</Text>
               </Button>

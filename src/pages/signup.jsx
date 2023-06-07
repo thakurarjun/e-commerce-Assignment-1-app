@@ -18,20 +18,21 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { users } from "../backend/db/users";
 import { v4 as uuid } from "uuid";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 // import { formatDate } from "../utils/authUtils.js";
 
 
 const schema = yup.object({
-  firstName: yup.string().required(),
- lastName:yup.string().required(),
- email:yup.string().email().required(),
- password:yup.string().required(),
-
-
-
+  firstName: yup.string().required("Enter your first name"),
+ lastName:yup.string().required("Enter your last name"),
+ email:yup.string().email().required("Enter your email"),
+ password:yup.string().min(5).max(12).required(),
 }).required();
 
 const Signup = () => {
+
+  const navigate = useNavigate();
   const { register, handleSubmit, formState:{ errors } } = useForm({
     resolver: yupResolver(schema)
   });
@@ -63,9 +64,6 @@ const handleSignup = (data) => {
   localStorage.setItem("userData",JSON.stringify([...userData,myData]))
 
   // }
-  
-
-  
   console.log(userData,"===== user data ")
   
 }
@@ -73,7 +71,15 @@ const handleSignup = (data) => {
 
 // },[userData])
 console.log(userData,"====================== geting data")
+const handleLogin = () => {
+  navigate("/")
+  toast.success("You have loggedin successfully")
+}
 
+const handleAccountBtn = () => {
+  navigate("/login")
+  toast.success("Please enter requires field")
+}
 
   return (
     <>
@@ -99,6 +105,7 @@ console.log(userData,"====================== geting data")
                         shadow={"lg"}
                         {...register("firstName")}
                       />
+                      <p color="red">{errors.firstName?.message}</p>
                       <FormLabel mt={3}>
                         {" "}
                         <Text as="b">Last Name</Text>
@@ -109,6 +116,7 @@ console.log(userData,"====================== geting data")
                         shadow={"lg"}
                         {...register("lastName")}
                       />
+                      <p color="red">{errors.lastName?.message}</p>
                       <FormLabel mt={3}>
                         {" "}
                         <Text as="b">Email address</Text>
@@ -119,6 +127,7 @@ console.log(userData,"====================== geting data")
                         shadow={"lg"}
                         {...register("email")}
                       />
+                      <p color="red">{errors.email?.message}</p>
                       <FormLabel mt={3}>
                         <Text as="b">Password</Text>
                       </FormLabel>
@@ -129,6 +138,7 @@ console.log(userData,"====================== geting data")
                         shadow="lg"
                         {...register("password")}
                       />
+                      <p color="red">{errors.password?.message}</p>
                     </FormControl>
 
                     <Box
@@ -156,6 +166,7 @@ console.log(userData,"====================== geting data")
                         w={80}
                         bg="blue"
                         shadow="lg"
+                        onClick={() => handleLogin()}
                       >
                         <Text color="white">Create New Account</Text>
                       </Button>
@@ -164,7 +175,7 @@ console.log(userData,"====================== geting data")
                       <Button
                         w={80}
                         shadow="lg"
-                        onClick={()=>navigate("/login")}
+                        onClick={()=>handleAccountBtn()}
                       >
                         <Text color="black">Already have an account?</Text>
                       </Button>

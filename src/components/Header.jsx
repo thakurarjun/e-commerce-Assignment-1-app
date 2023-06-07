@@ -14,21 +14,28 @@ import { SearchIcon } from "@chakra-ui/icons";
 import { BsCartCheck, BsHeart } from 'react-icons/bs'
 import { useNavigate } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
+import { toast } from "react-hot-toast";
 
 
-const Header = ({search,setSearch,cartCount=0,wishlist=0}) => {
+const Header = ({search,setSearch,cartCount=0,wishlist=0,cartItem,wishList}) => {
   const style = {
     position:"absolute",
     top:"10px",
-    right:"144px"
+    right:"100px"
   }
   const style1 = {
-    position:"absolute",
-    top:"10px",
-    left:"10px"
+    position: "absolute",
+    top: "7px",
+    right: "142px"
   }
   // console.log(search,setSearch,"======================")
   const navigate = useNavigate();
+
+  console.log(cartItem.length,"cartdata faiza")
+  const handleLogout = () => {
+    navigate("/login")
+    toast.success("You have logout sucessfully")
+  }
   return (
     <>
       <Box bg={"white"}>
@@ -64,25 +71,21 @@ const Header = ({search,setSearch,cartCount=0,wishlist=0}) => {
               size={"sm"}
               borderRadius="none"
               colorScheme="blackAlpha"
-              onClick={() => navigate("/login")}
+              onClick={() => handleLogout()}
             >
               {" "}
-              <Text color="white">Login</Text>
+              <Text color="white">Logout</Text>
             </Button>
             </Box>
             
             <Box ml={5} mt={1} cursor={"pointer"} onClick={()=>navigate("/wishlist")}>
-            <Badge style1={style1} colorScheme='purple'>{wishlist}</Badge>
+            <Badge style={style1} colorScheme='purple'>{wishlist}</Badge>
             <Icon as={BsHeart} w={5} h={5} />
             </Box>
             <Box ml={5} mt={1} cursor="pointer" onClick={()=>navigate("/cart")}>
-            <Badge style={style} colorScheme='purple'>{cartCount}</Badge>
+            <Badge style={style} colorScheme='purple'>{cartItem.length}</Badge>
             <Icon as={BsCartCheck} w={6} h={5} />
             </Box>
-            <Box ml={5} mt={1} cursor="pointer">
-            <Icon as={BiLogOut} w={7} h={6} />
-            </Box>
-            
           </Box>
         </Box>
         </Box>

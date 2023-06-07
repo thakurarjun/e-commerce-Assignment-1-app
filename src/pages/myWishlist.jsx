@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useLocation } from 'react-router-dom';
 
-const MyWishlist = ({cartCount,wishlist}) => {
+const MyWishlist = ({cartCount,wishlist,cartItem}) => {
   const {state} = useLocation();
 console.log(state,"myWishlist====>")
 
@@ -14,7 +14,7 @@ const handleCartButton = () => {
   return (
     <>
     <Box>
-    <Header wishlist={wishlist} cartCount={cartCount} />
+    <Header wishlist={wishlist} cartCount={cartCount} cartItem={cartItem}/>
     <Box mt={25}>
   <Text as="b" fontSize={"25px"}>My WishList</Text>
   <Box w={"95%"} mx={"auto"} mt={5} mb={5} >
