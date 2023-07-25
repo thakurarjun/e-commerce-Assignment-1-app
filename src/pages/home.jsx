@@ -12,7 +12,7 @@ const Home = ({cartItem,wishList}) => {
   const [categoryData, setCategoryData] = useState([]);
   const [isLoading,setIsLoading] = useState(false)
   const navigate = useNavigate();
-  console.log("search vlue arjun",search)
+
   useEffect(() => {
     const fetchCategoryData = async () => {
       setIsLoading(true)
@@ -30,7 +30,7 @@ const Home = ({cartItem,wishList}) => {
     navigate(`/products/${cat}`)
   }
   const handleShowBtn = () => {
-    navigate("/login")
+    // navigate("/login")
     toast.success("Please login with your account")
   }
   return (

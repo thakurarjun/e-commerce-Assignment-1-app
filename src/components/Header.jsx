@@ -28,10 +28,10 @@ const Header = ({search,setSearch,cartCount=0,wishList,cartItem}) => {
     top: "7px",
     right: "142px"
   }
-  console.log(wishList,"======================")
+  
   const navigate = useNavigate();
 
-  console.log(cartItem.length,"cartdata faiza")
+  
   const handleLogout = () => {
     navigate("/login")
     toast.success("You have logout sucessfully")
