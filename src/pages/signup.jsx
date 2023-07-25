@@ -20,6 +20,8 @@ import { users } from "../backend/db/users";
 import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { signupSuccess } from "../redux/reducers/authSlicer";
 // import { formatDate } from "../utils/authUtils.js";
 
 
@@ -31,46 +33,45 @@ const schema = yup.object({
 }).required();
 
 const Signup = () => {
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { register, handleSubmit, formState:{ errors } } = useForm({
     resolver: yupResolver(schema)
   });
-  const [userData,setUserData] = useState([])
-  useEffect(()=>{
-    setUserData(users)
-  },[users])
-  // console.log(users,"====== users")
-const handleSignup = (data) => {
-  if(userData.length > 0){
-    userData.forEach((item)=>{
-      if(item.email === data.email || item.firstName === data.firstName || item.lastName === data.lastName){
-        return  alert("user already exist")
-      
-      }
-    });
-    // return 
-  }
-    const myData = {
-      _id: uuid(),
+ 
+
+const handleSignup = async (data) => {
+  
+    const apiData = {
        firstName:data.firstName,
        lastName:data.lastName,
        email:data.email,
        password:data.password,
-       createdAt: Date.now(),
-      updatedAt: Date.now(),
     };
-    // setUserData([...userData,myData])
-  localStorage.setItem("userData",JSON.stringify([...userData,myData]))
-
-  // }
-  console.log(userData,"===== user data ")
+    try {
+      const response = await fetch('api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(apiData),
+      });
+  
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData,"signupreposne");
+        dispatch(signupSuccess(responseData))
+        navigate("/login")
+        toast.success("You have loggedin successfully")
+      } else {
+        console.log('Request failed with status:', response.status);
+      }
+    } catch (error) {
+      console.log('Request failed:', error);
+    }
   
 }
-// useEffect(()=>{
 
-// },[userData])
-console.log(userData,"====================== geting data")
 const handleLogin = () => {
   navigate("/")
   toast.success("You have loggedin successfully")
@@ -78,7 +79,7 @@ const handleLogin = () => {
 
 const handleAccountBtn = () => {
   navigate("/login")
-  toast.success("Please enter requires field")
+  toast.success("Please enter required field")
 }
 
   return (
@@ -87,7 +88,7 @@ const handleAccountBtn = () => {
         <Header />
         <Box>
           <Box>
-            <Flex justify="center" align="center" h={"90vh"}>
+            <Flex justify="center" align="center" h={"95vh"}>
               <Center>
                 <Box>
                   <Box w={450} bg="white" p={5}>
@@ -166,7 +167,7 @@ const handleAccountBtn = () => {
                         w={80}
                         bg="blue"
                         shadow="lg"
-                        onClick={() => handleLogin()}
+                        // onClick={() => handleLogin()}
                       >
                         <Text color="white">Create New Account</Text>
                       </Button>

@@ -7,17 +7,20 @@ import { ChakraProvider } from '@chakra-ui/react';
 import {BrowserRouter} from "react-router-dom"
 import { CartProvider } from "./context/cartContext";
 import toast, { Toaster } from 'react-hot-toast';
+import { Provider } from "react-redux";
+import store from "./redux/store";
 // Call make Server
 makeServer();
 
 ReactDOM.render(
   <React.StrictMode>
-     <ChakraProvider>
+    
+    <ChakraProvider>
       <BrowserRouter>
-      <CartProvider>
       <Toaster />
+      <Provider store={store}>
       <App />
-      </CartProvider>
+      </Provider>
       </BrowserRouter>
      </ChakraProvider>
    
