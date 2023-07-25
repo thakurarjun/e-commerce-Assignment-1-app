@@ -33,7 +33,7 @@ const Header = ({search,setSearch,cartCount=0,wishList,cartItem}) => {
 
   
   const handleLogout = () => {
-    navigate("/login")
+    navigate("/")
     toast.success("You have logout sucessfully")
   }
   return (
@@ -49,7 +49,7 @@ const Header = ({search,setSearch,cartCount=0,wishList,cartItem}) => {
           padding="5px"
         >
           <Box cursor={"pointer"}>
-            <Heading as="h2" size={"lg"} color={"gray.500"} onClick={()=>navigate("/")}>
+            <Heading as="h2" size={"lg"} color={"gray.500"} onClick={()=>navigate("/home")}>
               NorthStar
             </Heading>
           </Box>
