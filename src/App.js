@@ -26,9 +26,9 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Home search={search} setSearch={setSearch} cartItem={cartItem} />} wishList={wishList} />
+        <Route path="/home" element={<Home search={search} setSearch={setSearch} cartItem={cartItem} />} wishList={wishList} />
         <Route path="/mockman" element={<MyMockman  cartItem={cartItem}/>} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       <Route path="/products/:id" element={<Products setCartCount={setCartCount} search={search} cartItem={cartItem} setCartItem = {setCartItem} setSearch={setSearch}/>} wishList={wishList} />
         <Route path="/productCard" element={<ProductCard setCartCount={setCartCount} cartItem={cartItem} setCartItem = {setCartItem} wishList={wishList} setWishList={setWishList}  />} />
