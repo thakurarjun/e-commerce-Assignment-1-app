@@ -56,7 +56,7 @@ const Login = () => {
         dispatch(loginSuccess(responseData))
         setToLocalStorage("token",responseData.encodedToken)
         setToLocalStorage("user",responseData.foundUser)
-        navigate("/home")
+        navigate("/")
         toast.success("You have loggedin successfully")
       } else {
         console.log('Request failed with status:', response.status);
