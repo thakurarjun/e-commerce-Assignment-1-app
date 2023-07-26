@@ -30,10 +30,8 @@ const Header = ({search,setSearch,cartCount=0,wishList,cartItem}) => {
   }
   
   const navigate = useNavigate();
-
-  
   const handleLogout = () => {
-    navigate("/")
+    navigate("/login")
     toast.success("You have logout sucessfully")
   }
   return (
@@ -49,7 +47,7 @@ const Header = ({search,setSearch,cartCount=0,wishList,cartItem}) => {
           padding="5px"
         >
           <Box cursor={"pointer"}>
-            <Heading as="h2" size={"lg"} color={"gray.500"} onClick={()=>navigate("/home")}>
+            <Heading as="h2" size={"lg"} color={"gray.500"} onClick={()=>navigate("/")}>
               NorthStar
             </Heading>
           </Box>
@@ -83,7 +81,7 @@ const Header = ({search,setSearch,cartCount=0,wishList,cartItem}) => {
             <Icon as={BsHeart} w={5} h={5} />
             </Box>
             <Box ml={5} mt={1} cursor="pointer" onClick={()=>navigate("/cart")}>
-            <Badge style={style} colorScheme='purple'>{cartItem?cartItem?.length : 0}</Badge>
+            <Badge style={style} colorScheme='purple'>{cartItem? cartItem?.length : 0}</Badge>
             <Icon as={BsCartCheck} w={6} h={5} />
             </Box>
           </Box>

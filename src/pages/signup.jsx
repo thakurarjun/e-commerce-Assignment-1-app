@@ -61,7 +61,7 @@ const handleSignup = async (data) => {
         const responseData = await response.json();
         console.log(responseData,"signupreposne");
         dispatch(signupSuccess(responseData))
-        navigate("/")
+        navigate("/login")
         toast.success("You have loggedin successfully")
       } else {
         console.log('Request failed with status:', response.status);
@@ -78,7 +78,7 @@ const handleLogin = () => {
 }
 
 const handleAccountBtn = () => {
-  navigate("/")
+  navigate("/login")
   toast.success("Please enter required field")
 }
 
